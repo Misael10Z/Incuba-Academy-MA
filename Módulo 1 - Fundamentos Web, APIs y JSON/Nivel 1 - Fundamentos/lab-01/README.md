@@ -1,7 +1,5 @@
 # **Nivel 1 - Laboratorio: inspección de una API real de prueba**
 
-
-
 ## 2. Registro de status code y Content-Type:
 
 * **Status code:**
@@ -13,11 +11,7 @@
   application/json; charset=utf-8
   ```
 
-
-
 ![1787874409114](image/README/1787874409114.png)
-
-
 
 ## 3. Campos (5):
 
@@ -30,12 +24,12 @@
    "lastName": "Johnson"
    ```
 
-   → String.
+   String.
 3. ```JSON
    "phone": "+81 965-431-3024"
    ```
 
-   → String.
+   String.
 4. ```JSON
    "address": {
    "address": "626 Main Street",
@@ -56,18 +50,13 @@
 
    Number.
 
-
-
 ## 4. 2º GET
 
 ![1787874418426](image/README/1787874418426.png)
 
-
-
 ## 5. Comparación
 
 El endpoint del punto 1 devuelve un objeto con los datos de un usuario, mientras que el del punto 4 de vuelve también un objeto pero con un único campo a modo de mensaje.
-
 
 ## 7. Respuestas de query identificadas
 
@@ -78,20 +67,15 @@ El endpoint del punto 1 devuelve un objeto con los datos de un usuario, mientras
   }.
 ```
 
-
-
 ![1787874430094](image/README/1787874430094.png)
-
 
 # Aprendizajes
 
 1. ***:** El motivo en el que en que a veces en peticiones GET se obtiene el código de estado "304 Not Modified" en vez de "200 OK", se debe a que la primera vez que es cargada la página de la URL con el código de estado "200 OK", a su vez almacena datos de la página en caché (en memoria o disco) para la próxima vez que vuelva a cargarse. Por lo que la siguiente vez que es cargada, la página busca los datos en la caché y detecta que no ha habido ningún cambio en la respuesta de la solicitud, mostando en consecuencia el nuevo código de estado "304 Not Modified".
-   	La solución a esto, investigando en Google, fué habilitar la casilla "Disable cache" (marcada en cuadro amarillo en la primer imagen), para que no busque los datos almacenados y los vuelva a generar de cero.
+   La solución a esto, investigando en Google, fué habilitar la casilla "Disable cache" (marcada en cuadro amarillo en la primer imagen), para que no busque los datos almacenados y los vuelva a generar de cero.
 2. **Visualización de Content-Type:** En ocasiones cuando he querido revisar el Content-Type vía navegador, no lo podía encontrar, y comparándolo con Postman, éste sí me permitía visualiazar dicha clave-valor. Podía ver todas las claves-valor del header excepto la mencionada.
-   	El problema era el mismo por el que el código de estado era diferente en el punto anterior. Almacenaba la clave-valor Content-Type en caché, por lo que el navegador no consideraba generarla nuevamente y por lo tanto no permitía su visualización. Al desactivar la caché de Network, pude volver a visualizarla.
+   El problema era el mismo por el que el código de estado era diferente en el punto anterior. Almacenaba la clave-valor Content-Type en caché, por lo que el navegador no consideraba generarla nuevamente y por lo tanto no permitía su visualización. Al desactivar la caché de Network, pude volver a visualizarla.
 3. **Clave-valor Date:** Desconocía que el header almacenaba también la fecha de la respuesta de la solicitud como clave-valor, lo que lo considero útil para medir el tiempo de respuesta de una petición (si es que así funciona).
-
-
 
 # Duda
 
