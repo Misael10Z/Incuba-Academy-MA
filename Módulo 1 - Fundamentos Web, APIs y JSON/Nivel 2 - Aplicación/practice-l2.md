@@ -16,6 +16,9 @@ El parámetro de consulta es `q`: define que debe obtener todos aquellos registr
 
 ## 3. Script de Node.js
 
+Para su ejecución se utiliza el siguiente comando:
+`node fetchWithLimitAndSkip.mts`.
+
 ### 3.1 Consulta de productos
 
 - **Línea 1:** `try {`

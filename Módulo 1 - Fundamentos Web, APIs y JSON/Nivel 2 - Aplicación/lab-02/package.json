@@ -1,0 +1,12 @@
+{
+    "name": "index",
+    "version": "1.0.0",
+    "description": "A script to get products with price bigger than twelve and order them by price in ascending way.",
+    "type": "module",
+    "main": "src/index.js",
+    "private": true,
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "author": "Misael10Z"
+}
