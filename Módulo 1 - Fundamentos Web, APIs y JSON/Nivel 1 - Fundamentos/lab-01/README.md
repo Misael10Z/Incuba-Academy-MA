@@ -1,6 +1,6 @@
 # **Nivel 1 - Laboratorio: inspección de una API real de prueba**
 
-## 2. Registro de status code y Content-Type:
+## 2. Registro de status code y Content-Type
 
 * **Status code:**
   ```JSON
@@ -13,7 +13,7 @@
 
 ![1787874409114](image/README/1787874409114.png)
 
-## 3. Campos (5):
+## 3. Campos (5)
 
 1. ```JSON
    "id": 1

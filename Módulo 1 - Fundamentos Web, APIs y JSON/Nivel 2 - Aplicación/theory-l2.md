@@ -44,17 +44,16 @@
      - **@@FETCH_STATUS:** Variable global que almacena tres tipos de estados según el resultado del último FETCH (en nuestro caso, el primer FETCH).
        
        Sus estados son: 0 (éxito), -1 (fin del bucle/error) y -2 (fila faltante, eliminada por un usuario u otro proceso mientras CURSOR se ejecutaba).
-
-    Entonces:
-    
-    ```sql
-    WHILE @@FETCH_STATUS = 0 (comparación)
-    BEGIN
+     
+     Entonces:
+     
+     ```sql
+     WHILE @@FETCH_STATUS = 0 (comparación)
+     BEGIN
         PRINT @id, @name;
         FETCH NEXT FROM cursor_users INTO @id, @name;
-    END;
-    ```
-
+     END;
+     ```
 4. **CLOSE:** Cerramos el bucle una vez haya terminado (si no declaramos esta sentencia, el programa o SQL se quedará esperando en WHILE):
    
    ```sql
@@ -66,8 +65,8 @@
    ```sql
    DEALLOCATE cursor_users;
    ```
-
-  **Ejemplo integrado:**
+   
+   **Ejemplo integrado:**
 
 ```sql
 DECLARE @id INT, @name VARCHAR(30);
@@ -127,10 +126,9 @@ DEALLOCATE cursor_users;
   
   `Retry-After: Tues, 16 Jan 2027 15:50:03 GMT`.
   
-  <aside>  
-  💡
   
-  **Nota:** hasta este punto, todo lo explayado (de Rate limits) es aplicado del lado del servidor. A continuación se mencionan estrategias que son aplicables del lado del cliente (software).
+  
+  <u>***NOTA:***</u> Hasta este punto, todo lo explayado (de Rate limits) es aplicado del lado del servidor. A continuación se mencionan estrategias que son aplicables del lado del cliente (software).
   
   </aside>
 
@@ -149,7 +147,7 @@ DEALLOCATE cursor_users;
     - **Función Jitter (aleatoriedad):** Puede añadirse también un tiempo de espera aleatorio al Backoff, generalmente entre 0.1 y 2 segundos (ejs.: 2.7, 4.1, 8.3, …).
       
       Esto se hace con el fin de diferir el tiempo de espera con el Backoff de otros clientes y asegurar aún más la no sobrecarga del servidor.
-
+  
   He de aclarar que también existe otra estrategia, donde no exista el Backoff:
 
 - **Estrategia con solamente Jitter en cliente:** Luego del primer Retry-After, y fallar un segundo intento, el servidor puede volver a enviar otro Retry-After con un Jitter aplicado en vez de activar un Backoff.
@@ -160,7 +158,7 @@ DEALLOCATE cursor_users;
   - Segundo intento: Retry-After, 11.4 segundos.
   
   Y así con cada intento siguiente, un Retry-After con Jitter.
-
+  
   Por último, puede aplicarse una tercer estrategia:
 
 - **Estrategia con Retry-After estático y dinámico:** Retry-After posee un valor fijo si el servidor detecta que hay pocos usuarios/peticiones, pero que pueda cambiar a un valor dinámico (aleatoriedad) en caso de detectar muchos usuarios.
