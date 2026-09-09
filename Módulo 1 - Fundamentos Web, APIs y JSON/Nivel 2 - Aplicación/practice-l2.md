@@ -3,11 +3,11 @@
 ## 1. 1º GET con `limit`, `skip` y `select`
 
 - **Limit:** Instrucción o parámetro que establece la cantidad de registros a recuperar de una tabla de base de datos.
-  	En este caso, `limit=5` restringe la búsqueda a solo cinco registros.
+  En este caso, `limit=5` restringe la búsqueda a solo cinco registros.
 - **Skip:** Indica la cantidad de primeros registros que debe omitir o saltarse.
-  	En este caso, `skip=10` ordena ignorar los primeros diez registros.
+  En este caso, `skip=10` ordena ignorar los primeros diez registros.
 - **Select:** Determina los campos que debe inspeccionar y extraer de la tabla.
-  	En este caso, `select=firstName,age` precisa dos campos: `firstName` (primer nombre) y `age` (edad).
+  En este caso, `select=firstName,age` precisa dos campos: `firstName` (primer nombre) y `age` (edad).
 
 ## 2. 2º GET con `q`
 
@@ -16,18 +16,16 @@ El parámetro de consulta es `q`: define que debe obtener todos aquellos registr
 
 ## 3. Script de Node.js
 
-### 3.2 Error `500`
-
 ### 3.1 Consulta de productos
 
 - **Línea 1:** `try {`
 
   Inicializamos `try...catch` para poder principalmente capturar errores.
-  	Dentro de `try` se escribe la lógica principal que nos interesa ejecutar. Luego en `catch`, escribimos lógica para manejo de errores del bloque `try`.
+  Dentro de `try` se escribe la lógica principal que nos interesa ejecutar. Luego en `catch`, escribimos lógica para manejo de errores del bloque `try`.
 - **Línea 3:** `const response = await fetch("https://dummyjson.com/products?limit=10&skip=0");`
 
   Declaramos la variable `response` en forma de constante (`const`) para mantener valores o datos inmutables (solo para el dato principal, como un número, cadena de texto, objeto o arreglo, teniendo estos dos últimos pequeñas "excepciones", donde las propiedades o elementos, respectivamente, pueden modificarse. Es decir, solo mantiene intacto el valor inicial en ambos casos) para poder almacenar los datos de la consulta, la cual se realiza mediante la función `fetch()` para solicitudes vía URL.
-  	Cabe aclarar que debe adherise la expresión `await` previo al `fetch()` para indicarle al programa que debe esperar a que éste último retorne una respuesta.
+  Cabe aclarar que debe adherise la expresión `await` previo al `fetch()` para indicarle al programa que debe esperar a que éste último retorne una respuesta.
 - **Línea 6:**
 
 ```tsx
@@ -47,7 +45,7 @@ Se realiza una comprobación negativa mediante un `if` al estado general de la r
 - **Línea 12:** `const data: unknown = await response.json();`
 
   Los datos de la respuesta son convertidos a formato JSON mediante el método `response.json()`. Acá también debe declararse la expresión `await` previamente para aplicar la misma lógica detallada anteriormente.
-  	Posteriormente, estos datos en formato `JSON` son al almacenados en la constante `data`, que a su vez ésta posee un tipado estático de TypeScript especificando que los datos que recibe o va a guardar son de tipo `unknown` (desconocido). Esto se debe a que la información extraída por `fetch()` incluye diferentes tipos de datos que, si bien podríamos deducir uno por uno para crear una interfaz de tipos general para todos ellos, se considera recomendable crearlos solo para aquellos datos que se utilizan durante la ejecución, evitando generación de tipados que no terminen utilizándose (en consecuencia mejorando la legibilidad y claridad del código).
+  Posteriormente, estos datos en formato `JSON` son al almacenados en la constante `data`, que a su vez ésta posee un tipado estático de TypeScript especificando que los datos que recibe o va a guardar son de tipo `unknown` (desconocido). Esto se debe a que la información extraída por `fetch()` incluye diferentes tipos de datos que, si bien podríamos deducir uno por uno para crear una interfaz de tipos general para todos ellos, se considera recomendable crearlos solo para aquellos datos que se utilizan durante la ejecución, evitando generación de tipados que no terminen utilizándose (en consecuencia mejorando la legibilidad y claridad del código).
 - **Línea 14:**
 
 ```tsx
@@ -61,7 +59,7 @@ A partir de esta línea se empiezan a realizar validaciones para ir definiendo p
 - En esta línea, se comprueba si `data` es tipo `object` mediante dos condiciones.
   En la primer condición, se utiliza la expresión `typeof` para generar un valor en cadena de texto en base al tipo de dato de una variable (la respuesta de esta expresión siempre será un `string`). Luego, mediante el operador `!==` verificamos que `data` sea distinto a un `"object"` (mismo valor que devuelve `typeof`, por eso se encuentra encomillado).
 - Ahora se prosigue con el operador `||` para concatenar la siguiente condición: se valida que `data` sea igual a `null`. Se establece de esta manera ya que si `data` fuera `null` y no lo validamos, `if()` interpretará `data` o `null` como si fuera un `object` a pesar de no cumplirse o validarse la primer condición.
-  	Si ninguna de las dos condiciones se cumplen, el script proseguirá a la siguiente validación, caso contrario, lanzará una excepción.
+  Si ninguna de las dos condiciones se cumplen, el script proseguirá a la siguiente validación, caso contrario, lanzará una excepción.
 - **Línea 17:**
 
 ```tsx
@@ -120,6 +118,8 @@ Se declara el parámetro `p` para representar cada elemento del arreglo y accede
 
 Bloque `catch`. Utilizado para manejar todos los errores que puedan surgir durante el `try`. Este `catch` posee como parámetro la abreviación `e` (errores) donde recibirá toda la información lanzada por las excepciones. Adicionalmente, posee un `console.log()` para mostrar un mensaje de error genérico en caso de que haya algún tipo de error no contemplado durante la ejecución del código.
 
+### 3.2 Error `500`
+
 Para el manejo de este error (consulta `fetch()`comentada en la línea 4) se utiliza simplemente la validación de la línea 6.
 
 Un detalle a aclarar es que decidí universalizar en este `if()` el manejo de errores o códigos de estado para que no cubra solamente el error `500` sino también al resto de su especie *5xx* como también errores *4xx*.
@@ -129,25 +129,25 @@ Un detalle a aclarar es que decidí universalizar en este `if()` el manejo de er
 Quiero también explicar otras decisiones técnicas (como la del error `500`) en base a la investigación que efectué, utilizando herramientas como ChatGPT, Codex y Gemini, de las diferentes formas que existen de resolver las siguientes cuestiones:
 
 - **TypeScript antes que JavaScript:** Sencillamente es una razón de gusto personal, ya que prefiero que mi código sea seguro y lo más robusto, ordenado y estricto posible en cuanto a manejo de datos, que bien esto también puede considerarse como una decisión técnica.
-  	Entonces, gracias a este lenguaje o extensión de tipos JS, pude aprender más sobre estos temas que si hubiera usado JS.
+  Entonces, gracias a este lenguaje o extensión de tipos JS, pude aprender más sobre estos temas que si hubiera usado JS.
 - **Extensión `.mts` del script:** Esto es debido a que la expresión `await` no funciona en un script sin una `async function()` o si el script no es detectado como un módulo `ES Modules`, siendo estas dos formas válidas en una extensión `.ts` o `.js` normal. Por lo tanto, al utilizar `.mts`, le decimos a Node que interprete este archivo como un módulo, para poder utilizar `await`en`top-level`(o sea, cuando no está asocido a un bloque de`async function()`, sino en un bloque general o que está "suelto", como en este caso en un `try...catch`).
-  	Otra forma de convertir el script en un módulo es inicializando un `export {}` al inicio del archivo.
+  Otra forma de convertir el script en un módulo es inicializando un `export {}` al inicio del archivo.
 - `console.table()`**:** En un principio esta no fué la primer forma que utilicé para imprimir los resultados, y tiene que ver con lo siguiente:
 
   1. La primera manera fué utilizando un `map()` para iterar sobre todos los elementos del arreglo e imprimirlos mediante un simple `console.log()`.
-     	El motivo de haber descartado esta opción fué que, según lo aprendido, genera un nuevo arreglo en memoria con elementos `undefined` (de acuerdo a los campos seleccionados). Si bien la impresión ocurre de manera correcta y sin errores, la generación de este nuevo arreglo produce una carga innecesaria e indeseable sobre los recursos del dispositivo, **haciendo que el script pierda su propósito de simplicidad y eficiencia**.
-     	En conclusión, esta función suele utilizarse para generar un nuevo arreglo que **será almacenado para posteriormente ser tratado** y mantener el arreglo original intacto.
+     El motivo de haber descartado esta opción fué que, según lo aprendido, genera un nuevo arreglo en memoria con elementos `undefined` (de acuerdo a los campos seleccionados). Si bien la impresión ocurre de manera correcta y sin errores, la generación de este nuevo arreglo produce una carga innecesaria e indeseable sobre los recursos del dispositivo, **haciendo que el script pierda su propósito de simplicidad y eficiencia**.
+     En conclusión, esta función suele utilizarse para generar un nuevo arreglo que **será almacenado para posteriormente ser tratado** y mantener el arreglo original intacto.
   2. La segunda opción, fué utilizar un `forEach()`, que itera sobre el arreglo actual y no genera ninguno nuevo, e imprime los resultados.
-     	La decisión de no haber dejado esta función fué al momento de querer presentar la información de manera organizada mediante `console.log()`:
+     La decisión de no haber dejado esta función fué al momento de querer presentar la información de manera organizada mediante `console.log()`:
 
      `console.log(`ID: ${p.id}, Title: ${p.title}, Price: ${p.price}`);`
 
      Durante ese momento, recordé que existía un método de presentar la información en formato de tabla, y aquí es donde averigüo cuál era y ahora sabemos que es `console.table()`.
-     	Entonces, el motivo de haber elegido este método de `console` es su ventaja de llevar a cabo dos procesos en uno: itera automáticamente sobre el arreglo los campos que especifiquemos y los imprime de manera ordenada en columnas con sus respectivos nombres de campo. Y tampoco sobrecarga la memoria.
+     Entonces, el motivo de haber elegido este método de `console` es su ventaja de llevar a cabo dos procesos en uno: itera automáticamente sobre el arreglo los campos que especifiquemos y los imprime de manera ordenada en columnas con sus respectivos nombres de campo. Y tampoco sobrecarga la memoria.
 - **Tipado:** En un inicio pensé en tipar los datos de `response` mediante `types` e `interfaces` para validar estáticamente, pero luego las reemplaze por las validaciones en tiempo de ejecución.
-  	La razón de este cambio es que si bien el tipado estático asegura una correcta escritura de código sin contradicciones de tipos de datos y genera predicciones de código durante el desarrollo, **no asegura que los datos recibidos cumplan con la estructura establecida**.
-  	Ahora bien, según el estándar, se recomienda utilizar ambos enfoques, ya que ninguno tiene porque ser excluyente del otro. Esto duplicaría la efectividad y seguridad del código en general, en cualquier script o API.
-  	Entonces, aunque toda la validación en este script es en tiempo de ejecución, hay una línea de código en donde se produce este híbrido, la línea 12:
+  La razón de este cambio es que si bien el tipado estático asegura una correcta escritura de código sin contradicciones de tipos de datos y genera predicciones de código durante el desarrollo, **no asegura que los datos recibidos cumplan con la estructura establecida**.
+  Ahora bien, según el estándar, se recomienda utilizar ambos enfoques, ya que ninguno tiene porque ser excluyente del otro. Esto duplicaría la efectividad y seguridad del código en general, en cualquier script o API.
+  Entonces, aunque toda la validación en este script es en tiempo de ejecución, hay una línea de código en donde se produce este híbrido, la línea 12:
 
   `const data: unknown = await response.json();`
 
