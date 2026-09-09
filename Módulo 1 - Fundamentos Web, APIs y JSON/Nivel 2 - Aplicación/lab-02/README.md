@@ -13,6 +13,7 @@ Se modificó el nombre y extensión del archivo a `index.js` de acuerdo al enunc
 ### 2.1 Prerequisitos
 
 - Node.js 24 (en este caso utilicé Node.js v26.4.0).
+- Terminal o IDE.
 - Clonar o descargar en una carpeta de su preferencia el repositorio: `https://github.com/Misael10Z/Incuba-Academy-MA.git`.
   - En caso de clonar abra la termina de su sistema operativo o IDE y utilice el siguiente comando: `git clone https://github.com/Misael10Z/Incuba-Academy-MA.git`.
   - En caso de descarga, visite [github.com/Misael10Z/Incuba-Academy-MA](https://github.com/Misael10Z/Incuba-Academy-MA), busque el botón `<> Code` y descargue el ZIP.
