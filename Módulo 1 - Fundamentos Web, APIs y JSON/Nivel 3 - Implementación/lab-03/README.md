@@ -1,4 +1,4 @@
-# Lab 03: obtención y procesamiento paginado de productos
+# 1. Lab 03: obtención y procesamiento paginado de productos
 
 **Importante:** Si bien el enunciado del laboratorio Nº 3 no solicitaba documentación, consideré adherirla para que facilite la interpretación del programa y explicar de forma detallada cada paso. Reitero, como no se solicitaba documentación, consideré utilizar la IA para realizar y agilizar la misma. Cabe aclarar que toda la documentación (README.md y Objetivos_cumplidos.md) fue leída y corregida por mí (Misael).
 
@@ -13,7 +13,7 @@ La versión final del proyecto se centra en un flujo claro de responsabilidades:
 - `createJSON`: guarda la página en disco.
 - `logger`: registra cada evento en JSON Lines.
 
-## Requisitos
+## 1.1 Requisitos
 
 - Node.js con soporte para ejecutar archivos TypeScript directamente y con la opción `--env-file`.
 - Archivo `src/.env` con las variables necesarias para la ejecución.
@@ -21,7 +21,7 @@ La versión final del proyecto se centra en un flujo claro de responsabilidades:
 
 El proyecto no declara dependencias de ejecución ni scripts de test; el arranque se hace con `pnpm start`.
 
-## Ejecución
+## 1.2 Ejecución
 
 Desde la carpeta del laboratorio:
 
@@ -37,7 +37,7 @@ node --env-file=src/.env src/index.ts
 
 La ejecución es secuencial: cada página se procesa, se guarda y luego el programa continúa con la siguiente. Las métricas y los errores se registran en la carpeta de resultados.
 
-## Configuración
+## 1.3 Configuración
 
 La configuración del programa se lee desde `src/.env`. En este laboratorio, ese archivo se incluye en el repositorio como ejemplo de los parámetros necesarios para ejecutar el programa y comprender el uso de las variables de entorno. Sin embargo, un `.env` real es un archivo de configuración crítico: puede contener credenciales, tokens, direcciones privadas u otros datos sensibles, por lo que no debe publicarse en repositorios ni plataformas. Como práctica recomendada, se publica únicamente un `.env.example` con valores ficticios o vacíos y se mantiene el `.env` real fuera del control de versiones.
 
@@ -65,7 +65,7 @@ URL + QUERY + QUERY_LIMIT + LIMIT_VALUE + QUERY_CONNECTOR + QUERY_SKIP + skipVal
 
 Esto hace que la primera consulta empiece siempre en la posición correcta, y luego el cursor adicional se usa para compensar los productos que se recuperan por validación o por depuración.
 
-## Flujo final del programa
+## 1.4 Flujo final del programa
 
 El punto de entrada es `src/index.ts`. Para cada página, el flujo es este:
 
@@ -101,7 +101,7 @@ El punto de entrada es `src/index.ts`. Para cada página, el flujo es este:
 
 En la ejecución de ejemplo, `findNewProductByPagination` solo se ejecutó al procesar la paginación final (sin utilización del cursor; 1º escenario), que contenía 14 productos en lugar del límite de 20. La función intentó recuperar los 6 faltantes; como la API no devolvió más productos, el lote permaneció en 14 y el programa terminó. Es un ejemplo de finalización normal cuando ya no quedan resultados que recuperar.
 
-## Cómo funciona el cursor
+## 1.5 Cómo funciona el cursor
 
 El cursor es el mecanismo que evita saltarse productos o repetirlos cuando se tienen que recuperar elementos faltantes por invalidación o duplicado.
 
@@ -118,9 +118,9 @@ Cuando un lote necesita completarse, el cursor se incrementa con la cantidad de 
 
 En la práctica, esto significa que el programa mantiene la paginación general de 20 en 20 y, además, compensa los desplazamientos producidos por productos inválidos o repetidos.
 
-## Escenarios posibles
+## 2. Escenarios posibles
 
-### 1) Todas las paginaciones traen productos correctos
+### 2.1 Todas las paginaciones traen productos correctos
 
 Este es el caso más limpio:
 
@@ -131,7 +131,7 @@ Este es el caso más limpio:
 
 En este caso el cursor no aumenta por corrección, por lo que la siguiente página parte del salto base de la paginación normal.
 
-### 2) Algunas paginaciones tienen productos inválidos
+### 2.2 Algunas paginaciones tienen productos inválidos
 
 Cuando un producto no cumple la estructura requerida (por ejemplo, falta un campo o tiene un tipo incorrecto):
 
@@ -148,7 +148,7 @@ Ejemplo:
 - El cursor aumenta en 4.
 - La siguiente recuperación (por página o faltantes) empieza desde esa posición compensada.
 
-### 3) Algunas paginaciones tienen productos duplicados
+### 2.3 Algunas paginaciones tienen productos duplicados
 
 Cuando un lote llega completo pero contiene elementos repetidos:
 
@@ -159,7 +159,7 @@ Cuando un lote llega completo pero contiene elementos repetidos:
 
 Esto garantiza que el lote final no conserve innecesariamente productos repetidos y que siga teniendo la cantidad esperada.
 
-### 4) Algunas paginaciones tienen productos inválidos y duplicados
+### 2.4 Algunas paginaciones tienen productos inválidos y duplicados
 
 Este es el caso más completo y el que mejor ilustra la lógica del cursor.
 
@@ -191,7 +191,7 @@ Esto hace que el programa siga buscando productos nuevos aunque la paginación h
 
 Es decir, la lógica garantiza que el sistema no se atasca en un rango ya revisado y que, a la vez, no repite productos ni pierde posiciones clave durante la recuperación.
 
-## Organización del código
+## 3. Organización del código
 
 ```text
 lab-03/
@@ -225,7 +225,7 @@ lab-03/
 └── .gitignore
 ```
 
-## Responsabilidad de cada módulo
+## 4. Responsabilidad de cada módulo
 
 | Archivo                                       | Responsabilidad                                                                                                |
 | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
@@ -243,7 +243,7 @@ lab-03/
 | `src/type_guard/isProduct.ts`                 | Comprueba que cada producto tenga la forma esperada.                                                           |
 | `src/types/productType.ts`                    | Define los tipos compartidos del proyecto.                                                                     |
 
-## Salidas
+## 5. Salidas
 
 Con la configuración adecuada, el programa genera:
 
@@ -254,7 +254,7 @@ El log usa **JSON Lines (JSONL)**: cada línea contiene un objeto JSON independi
 
 La marca temporal se genera con `new Date().toISOString()`. El método produce una cadena conforme al formato de fecha y hora ISO 8601 en UTC, no en la zona horaria local del sistema. Se utiliza aquí como referencia consistente entre ejecuciones y como ejemplo de una práctica habitual de desarrollo.
 
-### Niveles del logger y secuencia de ejecución
+### 5.1 Niveles del logger y secuencia de ejecución
 
 El logger admite cuatro niveles:
 
@@ -276,7 +276,7 @@ Cada producto final tiene esta forma:
 }
 ```
 
-## Validaciones, errores y comportamiento operativo
+## 6. Validaciones, errores y comportamiento operativo
 
 - Las respuestas HTTP no exitosas lanzan un error y se registran en el log.
 - Cada petición usa `AbortSignal.timeout` para evitar bloqueos indefinidos.
@@ -284,7 +284,7 @@ Cada producto final tiene esta forma:
 - Los duplicados se eliminan por `id` para evitar repeticiones en el mismo lote.
 - El programa termina cuando la última página ya no alcanza el límite esperado (según valor establecido en la variable LIMIT_VALUE del .env) y, tras la validación y depuración, no hay más productos válidos y únicos para añadir.
 
-### Centralización de errores y uso de `await`
+### 6.1 Centralización de errores y uso de `await`
 
 El manejo de errores está centralizado en el `try/catch` principal de `src/index.ts`. Para este programa pequeño se decidió no añadir un `try/catch` específico a cada función: las funciones auxiliares propagan los errores que no pueden resolver localmente y el punto de entrada los registra. Las funciones que usan `fetch` sí comprueban `response.ok` y lanzan un error ante una respuesta HTTP no exitosa; los errores de red, timeout y lectura del cuerpo también se propagan.
 
@@ -292,11 +292,11 @@ Las solicitudes y recuperaciones de productos usan `await` porque son procesos c
 
 Hay una excepción deliberada para las advertencias de productos inválidos y duplicados: `validProducts` y `productsDepuration` usan `Array.filter`, cuyo callback síncrono no espera promesas. Se consideró innecesario reemplazarlo por `for...of` solo para esperar `logger.warn`. Estas advertencias son de mejor esfuerzo (_best effort_): si falla su escritura, el rechazo no llega al `try/catch` principal y, al quedar sin manejar, puede interrumpir el proceso (**Nota (Misael):** es decir, a todo o nada).
 
-### Aviso sobre diagnósticos de TypeScript
+### 6.2 Aviso sobre diagnósticos de TypeScript
 
 El editor o el analizador estático puede marcar `process.env.VARIABLE` porque las variables de entorno pueden estar ausentes (`undefined`). También puede marcar el acceso a `e.name`, `e.message` o `e.stack` dentro del `catch` de `index.ts`, ya que `e` se declara como `unknown`. Estos son diagnósticos de tipos y no errores de sintaxis; con la configuración requerida, no impiden por sí solos la ejecución normal con Node. No equivalen a una verificación satisfactoria de tipos: en un programa de producción convendría validar las variables de entorno y estrechar el tipo de `e` antes de acceder a sus propiedades.
 
-## Consideraciones finales
+## 7. Consideraciones finales
 
 El proyecto final se diseñó con una estrategia de recuperación de datos muy robusta:
 
